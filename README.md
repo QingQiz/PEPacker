@@ -1,11 +1,11 @@
-﻿代码流程：
+﻿Code Flow:
 
-loader.cpp 负责从自身的PACKED_SEC_NAME节读取一段数据，将其解码后作为PE程序加载
-packer.cpp 负责对修改loader，将要打包的程序放入loader的PACKED_SEC_NAME节中
+`loader.cpp` is responsible for reading a segment of data from its own `PACKED_SEC_NAME` section, decoding it, and loading it as a PE program.
+`packer.cpp` is responsible for modifying the loader, embedding the program to be packed into the `PACKED_SEC_NAME` section of the loader.
 
-具体来说，loader.cpp 将被编译为 loader.exe，使用 obcopy 将 loader.exe 整体打包进 packer.exe 中。
-在运行时，packer.exe 将会读取并修改自身程序中打包的 loader.exe，
-将 topack.exe 编码并存入 loader.exe 的 PACKED_SEC_NAME 节中，最后将其释放到文件，从而完成加壳。
+Specifically, `loader.cpp` will be compiled into `loader.exe`, and `obcopy` will be used to package the entire `loader.exe` into `packer.exe`.
+During runtime, `packer.exe` will read and modify the `loader.exe` embedded within its own program,
+encode `topack.exe` and store it in the `PACKED_SEC_NAME` section of `loader.exe`, and finally release it to a file, thereby completing the packing process.
 
 ```
       packer.exe                                                                                                 
